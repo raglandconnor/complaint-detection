@@ -1,49 +1,27 @@
-const axios = require('axios');
+import { NextResponse } from "next/server";
+import { AssemblyAI } from "assemblyai";
+import { removeAudio, storeAudio } from "@/lib/cloudinary";
 
-// Set up the API key and audio URL
-const apiKey = process.env.ASSEMBLYAI_API_KEY;
-const audioUrl = "C:\\Users\\ozari\\OneDrive\\Desktop\\coding\\xy.mp3";
+const client = new AssemblyAI({
+  apiKey: process.env.ASSEMBLYAI_API_KEY,
+});
 
-// Define the AssemblyAI API endpoints
-const transcriptEndpoint = 'https://api.assemblyai.com/v2/transcript';
+export async function POST(req) {
+  const audioBlob = await req.blob();
 
-// Function to transcribe audio using AssemblyAI
-async function transcribeAudio(audioUrl) {
   try {
-    // Request to start the transcription
-    const response = await axios.post(
-      transcriptEndpoint,
-      { audio_url: audioUrl },
-      {
-        headers: {
-          'authorization': apiKey,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    
-    // Get the transcription ID from the response
-    const transcriptId = response.data.id;
-    
-    // Poll for the transcription result
-    let transcriptResult = null;
-    while (!transcriptResult || transcriptResult.status !== 'completed') {
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds before checking again
-      const result = await axios.get(`${transcriptEndpoint}/${transcriptId}`, {
-        headers: {
-          'authorization': apiKey,
-        },
-      });
-      transcriptResult = result.data;
-    }
+    const { audioUrl, publicId } = await storeAudio(audioBlob, "audio");
 
-    // Output the transcribed text
-    console.log(transcriptResult.text);
+    const params = {
+      audio: audioUrl,
+      speaker_labels: true,
+    };
+    const transcript = await client.transcripts.transcribe(params);
+    await removeAudio(publicId);
 
+    return NextResponse.json({ transcript });
   } catch (error) {
-    console.error('Error during transcription:', error.message);
+    console.error("Error during transcription:", error);
+    return NextResponse.error({ message: "Transcription failed" });
   }
 }
-
-// Run the transcription function
-transcribeAudio(audioUrl);
