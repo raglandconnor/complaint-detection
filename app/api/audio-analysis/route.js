@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // Set up the API key and audio URL
-const apiKey = 'eb48ff1cff8d47c4ba8ecfe38853ae93';
+const apiKey = process.env.ASSEMBLYAI_API_KEY;
 const audioUrl = "C:\\Users\\ozari\\OneDrive\\Desktop\\coding\\xy.mp3";
 
 // Define the AssemblyAI API endpoints
