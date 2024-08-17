@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { extractComplaints, readJsonFile } from "@/lib/utils";
-import { sendAudio, sendComplaints } from "@/lib/http";
+import { sendAudio, sendComplaints, sendImage } from "@/lib/http";
 
 export function FormCard() {
   const [dataType, setDataType] = useState("json");
@@ -80,7 +80,16 @@ export function FormCard() {
             setIsSubmitting(false);
             return;
           }
-          console.log(`Correct file type (${file.type})`);
+          try {
+            const summaries = await sendImage(file);
+            setSummaries([...summaries]);
+            console.log(summaries);
+            setIsSubmitting(false);
+          } catch (error) {
+            console.log("Error parsing image:", error);
+            setError("An error occurred during submission.");
+            setIsSubmitting(false);
+          }
         } else if (dataType === "audio") {
           if (file.type !== "audio/mpeg" && file.type !== "audio/wav") {
             setError("Invalid file type");
