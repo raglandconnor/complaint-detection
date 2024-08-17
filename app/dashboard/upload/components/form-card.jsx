@@ -29,6 +29,7 @@ export function FormCard() {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
   const [summaries, setSummaries] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -37,6 +38,7 @@ export function FormCard() {
   };
 
   const handleSubmit = async () => {
+    setIsSubmitting(true);
     setSummaries([]);
     try {
       if (dataType === "text") {
@@ -47,12 +49,14 @@ export function FormCard() {
         if (dataType === "pdf") {
           if (file.type !== "application/pdf") {
             setError("Invalid file type");
+            setIsSubmitting(false);
             return;
           }
           console.log(`Correct file type (${file.type})`);
         } else if (dataType === "json") {
           if (file.type !== "application/json") {
             setError("Invalid file type");
+            setIsSubmitting(false);
             return;
           }
 
@@ -61,22 +65,26 @@ export function FormCard() {
           const summaries = await sendComplaints({ complaints });
           setSummaries([...summaries]);
           console.log(summaries);
+          setIsSubmitting(false);
           // TODO: Store the response to database
         } else if (dataType === "video") {
           if (file.type !== "video/mp4" && file.type !== "video/mpeg") {
             setError("Invalid file type");
+            setIsSubmitting(false);
             return;
           }
           console.log(`Correct file type (${file.type})`);
         } else if (dataType === "image") {
           if (file.type !== "image/jpeg" && file.type !== "image/png") {
             setError("Invalid file type");
+            setIsSubmitting(false);
             return;
           }
           console.log(`Correct file type (${file.type})`);
         } else if (dataType === "audio") {
           if (file.type !== "audio/mpeg" && file.type !== "audio/wav") {
             setError("Invalid file type");
+            setIsSubmitting(false);
             return;
           }
           try {
@@ -87,10 +95,12 @@ export function FormCard() {
             });
             setSummaries([...summaries]);
             console.log(summaries);
+            setIsSubmitting(false);
             // TODO: Store the response to database
           } catch (error) {
             console.error("Error sending audio:", error);
             setError("An error occurred during submission.");
+            setIsSubmitting(false);
           }
         }
       } else {
@@ -99,6 +109,7 @@ export function FormCard() {
     } catch (error) {
       console.error("Error during submission:", error);
       setError("An error occurred during submission.");
+      setIsSubmitting(false);
     }
   };
 
@@ -152,7 +163,9 @@ export function FormCard() {
         </CardContent>
         <CardFooter className="justify-between space-x-2">
           <Button variant="ghost">Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button disabled={isSubmitting} onClick={handleSubmit}>
+            Submit
+          </Button>
         </CardFooter>
       </Card>
       {/* TO BE DELETED */}
