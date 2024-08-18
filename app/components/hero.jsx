@@ -18,7 +18,7 @@ const Hero = () => {
           className="not-prose mb-6 dark:invert md:mb-8"
         /> */}
         <h1 className="!mb-4 text-4xl lg:text-5xl">
-          <Balancer>(our name) AI Complaint Detection</Balancer>
+          <Balancer>Zeal - AI Complaint Detection</Balancer>
         </h1>
         <h3 className="text-muted-foreground text-xl lg:text-2xl">
           <Balancer>
@@ -28,7 +28,7 @@ const Hero = () => {
         </h3>
         <div className="not-prose mt-6 flex gap-2 md:mt-12">
           <Button asChild>
-            <Link href="/dashboard">Get Started</Link>
+            <Link href="/signup">Get Started</Link>
           </Button>
           <Button variant={'ghost'} asChild>
             <Link href="/#features">Learn More -{'>'}</Link>

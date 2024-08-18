@@ -8,7 +8,7 @@ export default function Footer() {
         <Container className="grid gap-6">
           <div className="grid gap-6">
             <Link href="/">
-              <h1 className="text-2xl">[app name]</h1>
+              <h1 className="text-3xl font-bold">Zeal</h1>
             </Link>
             <div className="mb-6 flex flex-col gap-4 text-sm text-muted-foreground underline underline-offset-4 md:mb-0 md:flex-row">
               <Link href="/">Home</Link>

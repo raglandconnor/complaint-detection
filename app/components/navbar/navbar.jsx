@@ -10,7 +10,7 @@ export function Navbar() {
       <div className="relative flex h-16 items-center px-4">
         <div className="w-screen flex items-center space-x-4">
           <a href="/" className="font-semibold text-2xl">
-            Title
+            Zeal
           </a>
         </div>
         <div className="absolute flex flex-row gap-2 items-center right-4">
