@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import { getComplaints } from '@/lib/http';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export function SearchComplaints({ setCategories, selectedCategory }) {
+export function SearchComplaints({
+  setCategories,
+  selectedCategory,
+  searchQuery,
+}) {
   const [complaints, setComplaints] = useState([]);
   const [filteredComplaints, setFilteredComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log(selectedCategory);
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -32,18 +34,27 @@ export function SearchComplaints({ setCategories, selectedCategory }) {
     };
 
     fetchComplaints();
-  }, []);
+  }, [setCategories]);
 
   useEffect(() => {
+    let updatedComplaints = complaints;
+
     if (selectedCategory !== 'all') {
-      setFilteredComplaints(complaints);
-      setFilteredComplaints((prevComplaints) =>
-        prevComplaints.filter(
-          (complaint) => complaint.category === selectedCategory
-        )
+      updatedComplaints = updatedComplaints.filter(
+        (complaint) => complaint.category === selectedCategory
       );
     }
-  }, [selectedCategory]);
+
+    if (searchQuery) {
+      updatedComplaints = updatedComplaints.filter(
+        (complaint) =>
+          complaint.insight.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          complaint.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    setFilteredComplaints(updatedComplaints);
+  }, [selectedCategory, searchQuery, complaints]);
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -60,25 +71,6 @@ export function SearchComplaints({ setCategories, selectedCategory }) {
                 <Skeleton className="h-4 w-full" />
               </div>
               <Skeleton className="h-8 w-16" />
-            </div>
-          ))
-        : selectedCategory === 'all'
-        ? complaints.map((complaint) => (
-            <div
-              key={complaint.id}
-              className="ml-4 flex items-center justify-between space-x-4"
-            >
-              <div className="space-y-1">
-                <p className="text-sm font-medium leading-none">
-                  {complaint.insight}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {complaint.category}
-                </p>
-              </div>
-              <div className="ml-auto font-medium">
-                <Button variant="ghost">View</Button>
-              </div>
             </div>
           ))
         : filteredComplaints.map((complaint) => (

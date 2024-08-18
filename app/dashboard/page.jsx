@@ -32,6 +32,7 @@ export default function DashboardPage() {
   const [numComplaints, setNumComplaints] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -214,8 +215,10 @@ export default function DashboardPage() {
                     </SelectContent>
                   </Select>
                   <div className="col-span-2 flex flex-row items-center gap-2">
-                    <Search />
-                    <Button>Search</Button>
+                    <Search
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                    />
                   </div>
                 </div>
                 <Card className="col-span-4 h-[500px]">
@@ -226,6 +229,7 @@ export default function DashboardPage() {
                     <SearchComplaints
                       setCategories={setCategories}
                       selectedCategory={selectedCategory}
+                      searchQuery={searchQuery}
                     />
                   </CardContent>
                 </Card>
