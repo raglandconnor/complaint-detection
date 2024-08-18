@@ -7,6 +7,7 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
+
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
@@ -18,7 +19,12 @@ def create_app():
     # Register blueprints
     app.register_blueprint(api_bp, url_prefix='/api')
 
+    # Create tables if they do not exist
+    with app.app_context():
+        db.create_all()
+
     return app
+
 
 # Create the Flask app instance
 app = create_app()
