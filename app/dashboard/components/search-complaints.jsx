@@ -68,9 +68,9 @@ export function SearchComplaints({
             >
               <div className="flex-1 space-y-2">
                 <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-1/2" />
               </div>
-              <Skeleton className="h-8 w-16" />
+              {/* <Skeleton className="h-8 w-16" /> */}
             </div>
           ))
         : filteredComplaints.map((complaint) => (
