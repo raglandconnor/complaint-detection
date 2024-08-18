@@ -18,6 +18,14 @@ def get_complaints():
     return jsonify(complaints_list), 200
 
 
+@api_bp.route('/complaints/<string:category>', methods=['GET'])
+def get_complaints_by_category(category):
+    complaints = Complaint.query.filter_by(category=category).all()
+    complaints_list = [{'id': c.id, 'category': c.category,
+                        'insight': c.insight} for c in complaints]
+    return jsonify(complaints_list), 200
+
+
 @api_bp.route('/complaints', methods=['POST'])
 def create_complaints():
     data = request.json
