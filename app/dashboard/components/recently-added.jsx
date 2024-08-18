@@ -28,16 +28,12 @@ export function RecentlyAdded() {
     fetchComplaints();
   }, []);
 
-  console.log(Array.isArray(complaints));
-
-  // if (loading) return <p>...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="space-y-8 h-[375px] overflow-y-scroll">
       {loading
-        ? // Display Skeletons while loading
-          Array.from({ length: 5 }).map((_, index) => (
+        ? Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="flex items-center space-x-4">
               <div className="flex-1 space-y-2">
                 <Skeleton className="h-4 w-3/4" />
@@ -46,8 +42,7 @@ export function RecentlyAdded() {
               <Skeleton className="h-8 w-16" />
             </div>
           ))
-        : // Display complaints once loaded
-          complaints.map((complaint) => (
+        : complaints.map((complaint) => (
             <div key={complaint.id} className="flex items-center space-x-4">
               <div className="space-y-1">
                 <p className="text-sm font-medium leading-none">
@@ -57,7 +52,7 @@ export function RecentlyAdded() {
                   {complaint.category}
                 </p>
               </div>
-              <div className="ml-8 font-medium">
+              <div className="ml-auto font-medium">
                 <Button variant="ghost">View</Button>
               </div>
             </div>

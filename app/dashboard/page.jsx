@@ -30,6 +30,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [numComplaints, setNumComplaints] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -196,17 +198,19 @@ export default function DashboardPage() {
             <TabsContent value="filtered" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <div className="flex flex-col gap-4">
-                  <Select>
+                  <Select onValueChange={(value) => setSelectedCategory(value)}>
                     <SelectTrigger id="area">
                       <SelectValue placeholder="Filter" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="cat1">Category 1</SelectItem>
-                      <SelectItem value="cat2">Category 2</SelectItem>
-                      <SelectItem value="cat3">Category 3</SelectItem>
-                      <SelectItem value="cat4">Category 4</SelectItem>
-                      <SelectItem value="cat5">Category 5</SelectItem>
+                      {categories.map((category) => {
+                        return (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
                   <div className="col-span-2 flex flex-row items-center gap-2">
@@ -219,7 +223,10 @@ export default function DashboardPage() {
                     <CardTitle>Complaints</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <SearchComplaints />
+                    <SearchComplaints
+                      setCategories={setCategories}
+                      selectedCategory={selectedCategory}
+                    />
                   </CardContent>
                 </Card>
               </div>
