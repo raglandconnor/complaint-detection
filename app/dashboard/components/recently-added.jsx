@@ -36,10 +36,10 @@ export function RecentlyAdded() {
         ? Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="flex items-center space-x-4">
               <div className="flex-1 space-y-2">
-                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-full" />
                 <Skeleton className="h-4 w-1/2" />
               </div>
-              <Skeleton className="h-8 w-16" />
+              {/* <Skeleton className="h-8 w-16" /> */}
             </div>
           ))
         : complaints.map((complaint) => (

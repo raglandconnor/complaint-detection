@@ -30,7 +30,7 @@ export default function Footer() {
 
             <p>
               <a
-                href="/"
+                href="https://nisargoza.github.io/dev/"
                 className="underline hover:text-slate-700"
                 target="_blank"
               >
