@@ -12,6 +12,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Navbar } from './components/navbar/navbar';
 // import { Overview } from './components/overview';
 import { RecentlyAdded } from './components/recently-added';
+import { Search } from './components/search';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { SearchComplaints } from './components/search-complaints';
 
 export const metadata = {
   title: 'Dashboard - Complaints',
@@ -164,7 +173,35 @@ export default function DashboardPage() {
               </div>
             </TabsContent>
             <TabsContent value="filtered" className="space-y-4">
-              <div>filtered</div>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="flex flex-col gap-4">
+                  <Select>
+                    <SelectTrigger id="area">
+                      <SelectValue placeholder="Filter" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      <SelectItem value="cat1">Category 1</SelectItem>
+                      <SelectItem value="cat2">Category 2</SelectItem>
+                      <SelectItem value="cat3">Category 3</SelectItem>
+                      <SelectItem value="cat4">Category 4</SelectItem>
+                      <SelectItem value="cat5">Category 5</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <div className="col-span-2 flex flex-row items-center gap-2">
+                    <Search />
+                    <Button>Search</Button>
+                  </div>
+                </div>
+                <Card className="col-span-4 h-[500px]">
+                  <CardHeader>
+                    <CardTitle>Complaints</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <SearchComplaints />
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
             {/* <CalendarDateRangePicker /> */}
           </Tabs>
