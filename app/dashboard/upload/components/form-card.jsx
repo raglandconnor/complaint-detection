@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -24,11 +24,12 @@ import { extractComplaints, readJsonFile } from "@/lib/utils";
 import { sendAudio, sendComplaints, sendImage } from "@/lib/http";
 import { storeComplaints as storeToDb } from "../../../../lib/http";
 
+
 export function FormCard() {
-  const [dataType, setDataType] = useState("json");
+  const [dataType, setDataType] = useState('json');
   const [file, setFile] = useState(null);
-  const [text, setText] = useState("");
-  const [error, setError] = useState("");
+  const [text, setText] = useState('');
+  const [error, setError] = useState('');
   const [summaries, setSummaries] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -79,9 +80,9 @@ export function FormCard() {
             return;
           }
           console.log(`Correct file type (${file.type})`);
-        } else if (dataType === "image") {
-          if (file.type !== "image/jpeg" && file.type !== "image/png") {
-            setError("Invalid file type");
+        } else if (dataType === 'image') {
+          if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+            setError('Invalid file type');
             setIsSubmitting(false);
             return;
           }
@@ -92,13 +93,13 @@ export function FormCard() {
             await storeToDb(summaries);
             setIsSubmitting(false);
           } catch (error) {
-            console.log("Error parsing image:", error);
-            setError("An error occurred during submission.");
+            console.log('Error parsing image:', error);
+            setError('An error occurred during submission.');
             setIsSubmitting(false);
           }
-        } else if (dataType === "audio") {
-          if (file.type !== "audio/mpeg" && file.type !== "audio/wav") {
-            setError("Invalid file type");
+        } else if (dataType === 'audio') {
+          if (file.type !== 'audio/mpeg' && file.type !== 'audio/wav') {
+            setError('Invalid file type');
             setIsSubmitting(false);
             return;
           }
@@ -114,23 +115,23 @@ export function FormCard() {
             await storeToDb(summaries); // Store complaints to database
             setIsSubmitting(false);
           } catch (error) {
-            console.error("Error sending audio:", error);
-            setError("An error occurred during submission.");
+            console.error('Error sending audio:', error);
+            setError('An error occurred during submission.');
             setIsSubmitting(false);
           }
         }
       } else {
-        console.log("No file selected");
+        console.log('No file selected');
       }
     } catch (error) {
-      console.error("Error during submission:", error);
-      setError("An error occurred during submission.");
+      console.error('Error during submission:', error);
+      setError('An error occurred during submission.');
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="pt-4 md:pt-8 flex flex-col items-center">
       <Card className="w-[95%] md:w-[40rem]">
         <CardHeader>
           <CardTitle>Upload data</CardTitle>
@@ -158,7 +159,7 @@ export function FormCard() {
               </Select>
             </div>
           </div>
-          {dataType !== "text" ? (
+          {dataType !== 'text' ? (
             <div className="grid gap-2">
               <Label htmlFor="file">File</Label>
               <Input id="file" type="file" onChange={handleFileChange} />
