@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { UserNav } from './components/user-nav';
+import { Button } from '@/components/ui/button';
 
 export function Navbar() {
   return (
@@ -11,8 +13,16 @@ export function Navbar() {
             Title
           </a>
         </div>
-        <div className="absolute right-4">
-          <UserNav />
+        <div className="absolute flex flex-row gap-2 items-center right-4">
+          <Link href="/login">
+            <Button variant="secondary">Log In</Button>
+          </Link>
+          <Link href="/signup">
+            <Button>Sign Up</Button>
+          </Link>
+          <div className="ml-2">
+            <UserNav />
+          </div>
         </div>
       </div>
     </div>
