@@ -69,7 +69,11 @@ export default function DashboardPage() {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">867</div>
+                    {isLoading ? (
+                      <Skeleton className="h-8 w-full" />
+                    ) : (
+                      <div className="text-2xl font-bold">{numComplaints}</div>
+                    )}
                     {/* <p className="text-xs text-muted-foreground">
                       +20.1% from last month
                     </p> */}
@@ -175,22 +179,26 @@ export default function DashboardPage() {
             <TabsContent value="filtered" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <div className="flex flex-col gap-4">
-                  <Select>
+                  <Select onValueChange={(value) => setSelectedCategory(value)}>
                     <SelectTrigger id="area">
                       <SelectValue placeholder="Filter" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="cat1">Category 1</SelectItem>
-                      <SelectItem value="cat2">Category 2</SelectItem>
-                      <SelectItem value="cat3">Category 3</SelectItem>
-                      <SelectItem value="cat4">Category 4</SelectItem>
-                      <SelectItem value="cat5">Category 5</SelectItem>
+                      {categories.map((category) => {
+                        return (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
-                  <div className="col-span-2 flex flex-row items-center gap-2">
-                    <Search />
-                    <Button>Search</Button>
+                  <div className="col-span-1 lg:col-span-2">
+                    <Search
+                      searchQuery={searchQuery}
+                      setSearchQuery={setSearchQuery}
+                    />
                   </div>
                 </div>
                 <Card className="col-span-4 h-[500px]">
@@ -198,7 +206,11 @@ export default function DashboardPage() {
                     <CardTitle>Complaints</CardTitle>
                   </CardHeader>
                   <CardContent className="pl-2">
-                    <SearchComplaints />
+                    <SearchComplaints
+                      setCategories={setCategories}
+                      selectedCategory={selectedCategory}
+                      searchQuery={searchQuery}
+                    />
                   </CardContent>
                 </Card>
               </div>

@@ -1,9 +1,16 @@
 import { Input } from '@/components/ui/input';
 
-export function Search() {
+export function Search({ searchQuery, setSearchQuery }) {
   return (
     <div>
-      <Input type="search" placeholder="Search..." className="w-96" />
+      <Input
+        type="search"
+        value={searchQuery}
+        onChange={(e) => {
+          setSearchQuery(e.target.value);
+        }}
+        placeholder="Search..."
+      />
     </div>
   );
 }

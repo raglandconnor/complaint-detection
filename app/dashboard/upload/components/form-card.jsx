@@ -201,11 +201,14 @@ export function FormCard() {
       {summaries.map((summary, index) => (
         <Card key={index} className="w-[95%] md:w-[40rem]">
           <CardHeader>
-            <CardTitle>{summary.category}</CardTitle>
+            <CardTitle>Summary of Complaints</CardTitle>
           </CardHeader>
           <CardContent>
             <p>{summary.insight}</p>
           </CardContent>
+          <CardFooter className="text-sm text-muted-foreground">
+            {summary.category}
+          </CardFooter>
         </Card>
       ))}
     </div>
