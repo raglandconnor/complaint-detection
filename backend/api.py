@@ -53,6 +53,20 @@ def login():
     
     return jsonify({'message': 'Login successful', 'token': token}), 200
 
+#Get user id for front end
+@api_bp.route('/current_user', methods=['GET'])
+@login_required
+def current_user():
+    user = User.query.get(current_user.id)
+    if user is None:
+        abort(404, description="User not found")
+
+    return jsonify({
+        'id': str(user.id),
+        'email': user.email
+    })
+
+
 # Create a New Complaint
 @api_bp.route('/complaints', methods=['POST'])
 @login_required
