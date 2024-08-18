@@ -2,6 +2,7 @@ from flask import Flask
 from models import db
 from api import api_bp
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 
 # Load environment variables from .env file
@@ -18,6 +19,9 @@ def create_app():
 
     # Register blueprints
     app.register_blueprint(api_bp, url_prefix='/api')
+
+    # Enable CORS
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
     # Create tables if they do not exist
     with app.app_context():
