@@ -24,6 +24,7 @@ import { extractComplaints, readJsonFile } from '@/lib/utils';
 import { sendAudio, sendComplaints, sendImage } from '@/lib/http';
 import { storeComplaints as storeToDb } from '../../../../lib/http';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function FormCard() {
   const [dataType, setDataType] = useState('json');
@@ -188,14 +189,20 @@ export function FormCard() {
         </CardFooter>
       </Card>
       {/* TO BE DELETED */}
+      {isSubmitting && summaries.length === 0 && (
+        <Skeleton className="w-[95%] md:w-[40rem] mt-4 h-48" />
+      )}
       {summaries.map((summary, index) => (
         <Card key={index} className="w-[95%] md:w-[40rem] mt-4">
           <CardHeader>
-            <CardTitle>{summary.category}</CardTitle>
+            <CardTitle>Summary of Complaints</CardTitle>
           </CardHeader>
           <CardContent>
             <p>{summary.insight}</p>
           </CardContent>
+          <CardFooter className="text-sm text-muted-foreground">
+            {summary.category}
+          </CardFooter>
         </Card>
       ))}
     </div>
