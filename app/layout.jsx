@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body
-        className={`${inter.className} bg-gradient-to-br from-cyan-50 via-slate-100 to-teal-50`}
+        className={`${inter.className} bg-gradient-to-br from-slate-100 via-zinc-100 to-neutral-100`}
       >
         {children}
       </body>
