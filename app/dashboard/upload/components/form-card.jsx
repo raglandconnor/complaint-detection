@@ -18,10 +18,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { extractComplaints, readJsonFile } from '@/lib/utils';
-import { sendAudio, sendComplaints, sendImage } from '@/lib/http';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { extractComplaints, readJsonFile } from "@/lib/utils";
+import { sendAudio, sendComplaints, sendImage } from "@/lib/http";
+import { storeComplaints as storeToDb } from "../../../../lib/http";
+
 
 export function FormCard() {
   const [dataType, setDataType] = useState('json');
@@ -41,35 +43,39 @@ export function FormCard() {
     setIsSubmitting(true);
     setSummaries([]);
     try {
-      if (dataType === 'text') {
-        console.log('Text:', text);
-      } else if (file) {
-        console.log('File:', file);
-
-        if (dataType === 'pdf') {
-          if (file.type !== 'application/pdf') {
-            setError('Invalid file type');
-            setIsSubmitting(false);
-            return;
-          }
-          console.log(`Correct file type (${file.type})`);
-        } else if (dataType === 'json') {
-          if (file.type !== 'application/json') {
-            setError('Invalid file type');
-            setIsSubmitting(false);
-            return;
-          }
-
-          const rawData = await readJsonFile(file);
-          const complaints = extractComplaints(rawData);
-          const summaries = await sendComplaints({ complaints });
+      if (dataType === "text") {
+        try {
+          const summaries = await sendComplaints({ complaints: [text] });
           setSummaries([...summaries]);
-          console.log(summaries);
+        } catch (error) {
+          console.error("Error sending text:", error);
+          setError("An error occurred during submission.");
+        }
+        setIsSubmitting(false);
+      } else if (file) {
+        console.log("File:", file);
+        if (dataType === "json") {
+          if (file.type !== "application/json") {
+            setError("Invalid file type");
+            setIsSubmitting(false);
+            return;
+          }
+
+          try {
+            const rawData = await readJsonFile(file);
+            const complaints = extractComplaints(rawData);
+            const summaries = await sendComplaints({ complaints });
+            setSummaries([...summaries]);
+
+            await storeToDb(summaries);
+          } catch (error) {
+            console.log("Error parsing JSON:", error);
+          }
+
           setIsSubmitting(false);
-          // TODO: Store the response to database
-        } else if (dataType === 'video') {
-          if (file.type !== 'video/mp4' && file.type !== 'video/mpeg') {
-            setError('Invalid file type');
+        } else if (dataType === "video") {
+          if (file.type !== "video/mp4" && file.type !== "video/mpeg") {
+            setError("Invalid file type");
             setIsSubmitting(false);
             return;
           }
@@ -84,6 +90,7 @@ export function FormCard() {
             const summaries = await sendImage(file);
             setSummaries([...summaries]);
             console.log(summaries);
+            await storeToDb(summaries);
             setIsSubmitting(false);
           } catch (error) {
             console.log('Error parsing image:', error);
@@ -104,8 +111,9 @@ export function FormCard() {
             });
             setSummaries([...summaries]);
             console.log(summaries);
+
+            await storeToDb(summaries); // Store complaints to database
             setIsSubmitting(false);
-            // TODO: Store the response to database
           } catch (error) {
             console.error('Error sending audio:', error);
             setError('An error occurred during submission.');
@@ -142,7 +150,7 @@ export function FormCard() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="json">JSON</SelectItem>
-                  <SelectItem value="pdf">PDF</SelectItem>
+
                   <SelectItem value="text">Text</SelectItem>
                   <SelectItem value="image">Image</SelectItem>
                   <SelectItem value="audio">Audio</SelectItem>
