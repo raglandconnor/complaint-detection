@@ -52,9 +52,9 @@ export function RecentlyAdded() {
                   {complaint.category}
                 </p>
               </div>
-              <div className="ml-auto font-medium">
+              {/* <div className="ml-auto font-medium">
                 <Button variant="ghost">View</Button>
-              </div>
+              </div> */}
             </div>
           ))}
     </div>
