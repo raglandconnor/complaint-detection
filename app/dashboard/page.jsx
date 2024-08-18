@@ -214,14 +214,14 @@ export default function DashboardPage() {
                       })}
                     </SelectContent>
                   </Select>
-                  <div className="col-span-2 flex flex-row items-center gap-2">
+                  <div className="col-span-1 lg:col-span-2">
                     <Search
                       searchQuery={searchQuery}
                       setSearchQuery={setSearchQuery}
                     />
                   </div>
                 </div>
-                <Card className="col-span-4 h-[500px]">
+                <Card className="col-span-1 lg:col-span-4 h-[500px]">
                   <CardHeader>
                     <CardTitle>Complaints</CardTitle>
                   </CardHeader>

@@ -10,7 +10,6 @@ export function Search({ searchQuery, setSearchQuery }) {
           setSearchQuery(e.target.value);
         }}
         placeholder="Search..."
-        className="w-96"
       />
     </div>
   );
