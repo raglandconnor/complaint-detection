@@ -10,7 +10,7 @@ export function Search({ searchQuery, setSearchQuery }) {
           setSearchQuery(e.target.value);
         }}
         placeholder="Search..."
-        className="w-96"
+        className="w-96 bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-60"
       />
     </div>
   );

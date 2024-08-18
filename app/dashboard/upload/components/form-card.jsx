@@ -132,7 +132,7 @@ export function FormCard() {
 
   return (
     <div className="pt-4 md:pt-8 flex flex-col items-center">
-      <Card className="w-[95%] md:w-[40rem]">
+      <Card className="w-[95%] md:w-[40rem] bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-30">
         <CardHeader>
           <CardTitle>Upload data</CardTitle>
           <CardDescription>Upload customer complaint data</CardDescription>
@@ -145,10 +145,13 @@ export function FormCard() {
                 defaultValue="json"
                 onValueChange={(value) => setDataType(value)}
               >
-                <SelectTrigger id="area">
+                <SelectTrigger
+                  id="area"
+                  className="bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-60"
+                >
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-60">
                   <SelectItem value="json">JSON</SelectItem>
 
                   <SelectItem value="text">Text</SelectItem>
@@ -162,7 +165,12 @@ export function FormCard() {
           {dataType !== 'text' ? (
             <div className="grid gap-2">
               <Label htmlFor="file">File</Label>
-              <Input id="file" type="file" onChange={handleFileChange} />
+              <Input
+                id="file"
+                type="file"
+                onChange={handleFileChange}
+                className="bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-60"
+              />
             </div>
           ) : (
             <div className="grid gap-2">

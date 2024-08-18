@@ -25,7 +25,11 @@ export default function RootLayout({ children }) {
           `}
         </Script>
       </head>
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${inter.className} bg-gradient-to-br from-cyan-50 via-slate-100 to-teal-50`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

@@ -62,13 +62,13 @@ export default function DashboardPage() {
             </div>
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
+            <TabsList className="bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-50">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="filtered">Filtered</TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <Card>
+                <Card className="bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10">
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Number of Complaints
@@ -177,7 +177,7 @@ export default function DashboardPage() {
                 </Card> */}
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-                <Card className="col-span-4">
+                <Card className="col-span-4 bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10">
                   <CardHeader>
                     <CardTitle>Overview</CardTitle>
                   </CardHeader>
@@ -185,7 +185,7 @@ export default function DashboardPage() {
                     {/* <Overview /> */}
                   </CardContent>
                 </Card>
-                <Card className="col-span-4 lg:col-span-3">
+                <Card className="col-span-4 lg:col-span-3 bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10">
                   <CardHeader>
                     <CardTitle>Recently Added</CardTitle>
                     {/* <CardDescription></CardDescription> */}
@@ -200,10 +200,13 @@ export default function DashboardPage() {
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <div className="flex flex-col gap-4">
                   <Select onValueChange={(value) => setSelectedCategory(value)}>
-                    <SelectTrigger id="area">
+                    <SelectTrigger
+                      id="area"
+                      className="bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-60"
+                    >
                       <SelectValue placeholder="Filter" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-60">
                       <SelectItem value="all">All</SelectItem>
                       {categories.map((category) => {
                         return (
@@ -221,7 +224,7 @@ export default function DashboardPage() {
                     />
                   </div>
                 </div>
-                <Card className="col-span-4 h-[500px]">
+                <Card className="col-span-4 h-[500px] bg-gray-200 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10">
                   <CardHeader>
                     <CardTitle>Complaints</CardTitle>
                   </CardHeader>
