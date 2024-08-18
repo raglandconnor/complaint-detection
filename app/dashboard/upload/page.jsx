@@ -1,8 +1,10 @@
+import { Navbar } from '../components/navbar/navbar';
 import { FormCard } from './components/form-card';
 
 const UploadPage = () => {
   return (
-    <main className="w-screen h-screen pt-24">
+    <main className="flex flex-col">
+      <Navbar />
       <section className="flex items-center justify-center">
         <FormCard />
       </section>
