@@ -18,12 +18,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { extractComplaints, readJsonFile } from "@/lib/utils";
-import { sendAudio, sendComplaints, sendImage } from "@/lib/http";
-import { storeComplaints as storeToDb } from "../../../../lib/http";
-
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { extractComplaints, readJsonFile } from '@/lib/utils';
+import { sendAudio, sendComplaints, sendImage } from '@/lib/http';
+import { storeComplaints as storeToDb } from '../../../../lib/http';
+import Link from 'next/link';
 
 export function FormCard() {
   const [dataType, setDataType] = useState('json');
@@ -43,20 +43,20 @@ export function FormCard() {
     setIsSubmitting(true);
     setSummaries([]);
     try {
-      if (dataType === "text") {
+      if (dataType === 'text') {
         try {
           const summaries = await sendComplaints({ complaints: [text] });
           setSummaries([...summaries]);
         } catch (error) {
-          console.error("Error sending text:", error);
-          setError("An error occurred during submission.");
+          console.error('Error sending text:', error);
+          setError('An error occurred during submission.');
         }
         setIsSubmitting(false);
       } else if (file) {
-        console.log("File:", file);
-        if (dataType === "json") {
-          if (file.type !== "application/json") {
-            setError("Invalid file type");
+        console.log('File:', file);
+        if (dataType === 'json') {
+          if (file.type !== 'application/json') {
+            setError('Invalid file type');
             setIsSubmitting(false);
             return;
           }
@@ -69,13 +69,13 @@ export function FormCard() {
 
             await storeToDb(summaries);
           } catch (error) {
-            console.log("Error parsing JSON:", error);
+            console.log('Error parsing JSON:', error);
           }
 
           setIsSubmitting(false);
-        } else if (dataType === "video") {
-          if (file.type !== "video/mp4" && file.type !== "video/mpeg") {
-            setError("Invalid file type");
+        } else if (dataType === 'video') {
+          if (file.type !== 'video/mp4' && file.type !== 'video/mpeg') {
+            setError('Invalid file type');
             setIsSubmitting(false);
             return;
           }
@@ -179,7 +179,9 @@ export function FormCard() {
           {error && <p className="text-sm text-red-500">{error}</p>}
         </CardContent>
         <CardFooter className="justify-between space-x-2">
-          <Button variant="ghost">Cancel</Button>
+          <Link href="/dashboard">
+            <Button variant="ghost">Cancel</Button>
+          </Link>
           <Button disabled={isSubmitting} onClick={handleSubmit}>
             Submit
           </Button>
