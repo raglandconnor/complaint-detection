@@ -1,5 +1,5 @@
-import { Navbar } from '../components/navbar/navbar';
-import { FormCard } from './components/form-card';
+import { Navbar } from "../components/navbar/navbar";
+import { FormCard } from "./components/form-card";
 
 const UploadPage = () => {
   return (
