@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -21,13 +23,28 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { SearchComplaints } from './components/search-complaints';
-
-export const metadata = {
-  title: 'Dashboard - Complaints',
-  description: '',
-};
+import { useEffect, useState } from 'react';
+import { getComplaints } from '@/lib/http';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [numComplaints, setNumComplaints] = useState(0);
+
+  useEffect(() => {
+    const fetchComplaints = async () => {
+      try {
+        const data = await getComplaints();
+        setNumComplaints(data.length);
+      } catch (error) {
+        console.error('Error fetching complaints:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchComplaints();
+  }, []);
+
   return (
     <>
       <div className="flex-col md:flex">
@@ -69,7 +86,11 @@ export default function DashboardPage() {
                     </svg>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">867</div>
+                    {isLoading ? (
+                      <Skeleton className="h-8 w-full" />
+                    ) : (
+                      <div className="text-2xl font-bold">{numComplaints}</div>
+                    )}
                     {/* <p className="text-xs text-muted-foreground">
                       +20.1% from last month
                     </p> */}

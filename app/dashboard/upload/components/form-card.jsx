@@ -189,7 +189,7 @@ export function FormCard() {
       </Card>
       {/* TO BE DELETED */}
       {summaries.map((summary, index) => (
-        <Card key={index} className="w-[95%] md:w-[40rem]">
+        <Card key={index} className="w-[95%] md:w-[40rem] mt-4">
           <CardHeader>
             <CardTitle>{summary.category}</CardTitle>
           </CardHeader>
