@@ -1,8 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Zeal: Complaint Detection Software
+
+## Description
+
+This project was developed for Headstarter AI's online hackathon, where our team was tasked with creating an innovative software solution for businesses. We built Zeal, an AI-powered complaint detection service, which included a comprehensive dashboard and a multi-modal AI agent capable of processing text, audio, and images. Although we aimed to implement Retrieval-Augmented Generation (RAG), time constraints prevented us from fully integrating it.
+
+Our project placed in the top 5 out of over 120 teams, earning recognition for its well-rounded execution and functionality.
+
+
+## Technologies Used
+
+-   JavaScript
+-   React (Next.js)
+-   Python (Flask)
+-   Docker
+-   PostgreSQL
+-   TailwindCSS
+-   OpenAI API
+-   LangChain
+-   PineCone
+
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +40,4 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. Open [http://localhost:3000](http://localhost:3000).
